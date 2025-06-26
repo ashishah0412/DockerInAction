@@ -53,7 +53,7 @@ For relating it better please refer to this diagram and consider HOST_PORT as ou
 & CONTAINER_PORT as inside port which is nothing but port of where container application is listening. So combination for remembering
 will be "outside_port:Inside_port". 
 
-![Docker Networking](images/ContainerPort.drawio.png)
+![Docker Networking](../images/ContainerPort.drawio.png)
 
 
 # 🐳 Docker Networking Explained
