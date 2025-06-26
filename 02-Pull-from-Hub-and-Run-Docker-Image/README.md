@@ -49,6 +49,134 @@ docker images
 - **HOST_PORT:** The port number on your host machine where you want to receive traffic (e.g., `8080`).
 - **CONTAINER_PORT:** The port number within the container that's listening for connections (e.g., `80`).
 
+For relating it better please refer to this diagram and consider HOST_PORT as outside port (from where request will be originated)
+& CONTAINER_PORT as inside port which is nothing but port of where container application is listening. So combination for remembering
+will be "outside_port:Inside_port". 
+
+![Docker Networking](images/ContainerPort.drawio.png)
+
+
+# 🐳 Docker Networking Explained
+
+This guide covers the key Docker networking drivers: **bridge**, **host**, and others — their concepts, advantages, differences, and use cases.
+
+---
+
+## 🔗 1. Bridge Networking (Default)
+
+### ✅ Concept
+- Docker creates a default virtual bridge network called `bridge`.
+- Containers on this network get private IPs (e.g., `172.17.0.X`).
+- Communication among containers on the same bridge is allowed.
+- Docker uses **NAT** to route traffic from containers to the internet.
+
+### 🧠 Features
+- Separate **network namespace** for each container.
+- Internal **DNS resolution**.
+- Isolated from host unless ports are explicitly mapped.
+
+### 🟢 Advantages
+- **Network isolation** between containers and host.
+- Easy communication within the same Docker network.
+- Ideal for **microservices** running on the same host.
+
+---
+
+## 🖥️ 2. Host Networking
+
+### ✅ Concept
+- Container shares the **host’s network stack**.
+- No IP or port mapping — container uses host’s IP and ports.
+- Appears like a native process on the host.
+
+### 🔄 Bridge vs Host Comparison
+
+| Feature                   | Bridge Network         | Host Network            |
+|--------------------------|------------------------|--------------------------|
+| Container IP             | Private (Docker subnet) | Host IP                 |
+| Port mapping             | ✅ Required             | ❌ Not required          |
+| Isolation                | ✅ Yes                  | ❌ No                   |
+| Performance              | Medium (NAT overhead)   | High (no NAT)           |
+| Port conflicts           | Avoided via mapping     | Possible                |
+
+### 🟢 Advantages
+- **Performance** is near-native.
+- Useful for apps needing fixed ports or close integration with host.
+- Ideal for **low-latency** networking.
+
+---
+
+## 🌐 3. Overlay Networking
+
+### ✅ Concept
+- Enables container communication **across multiple Docker hosts**.
+- Uses **VXLAN** to encapsulate network traffic.
+- Works with **Docker Swarm** and orchestrators.
+
+### 🟢 Advantages
+- Simplifies service discovery and scaling in multi-node clusters.
+- Great for **Swarm or Kubernetes** deployments.
+
+---
+
+## 🔌 4. Macvlan Networking
+
+### ✅ Concept
+- Assigns containers a **MAC address**.
+- Containers appear as **physical devices on the local LAN**.
+- Each container gets an IP from the **same network as the host**.
+
+### 🟢 Advantages
+- No NAT — direct network access.
+- Suitable for apps that must be on the **same network as physical hosts**.
+
+### ⚠️ Limitations
+- Needs manual setup.
+- May not work with all network drivers (e.g., Docker Desktop on Mac/Windows).
+
+---
+
+## ❌ 5. None Networking
+
+### ✅ Concept
+- **No networking** at all.
+- Container has no internet or inter-container communication.
+
+### 🟢 Use Case
+- For **maximum isolation** (e.g., offline batch jobs, secure data processing).
+
+---
+
+## 📊 Summary Table
+
+| Feature         | Bridge        | Host         | Overlay       | Macvlan       | None        |
+|----------------|---------------|--------------|---------------|---------------|-------------|
+| Isolation       | ✅            | ❌           | ✅            | ❌            | ✅          |
+| IP Type         | Docker internal | Host IP   | Virtual (VXLAN) | Physical LAN IP | None       |
+| Performance     | Medium        | High         | Medium         | High           | N/A         |
+| Port Mapping    | ✅ Required    | ❌ Not needed | Depends        | ❌ Not needed   | N/A         |
+| Use Case        | General apps  | Performance-critical | Clusters | Bare-metal-like | Air-gapped |
+
+---
+
+## 🧠 Final Thoughts
+
+- Use **bridge** for most containerized microservices.
+- Use **host** for high-performance, port-specific apps.
+- Use **overlay** for distributed systems and orchestration.
+- Use **macvlan** for LAN-exposed services.
+- Use **none** for secure, disconnected containers.
+
+
+
+
+
+
+
+
+
+
+
 ```bash
 # Run Docker Container
 docker run --name <CONTAINER-NAME> -p <HOST_PORT>:<CONTAINER_PORT> -d <IMAGE_NAME>:<TAG>
