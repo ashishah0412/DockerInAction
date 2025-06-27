@@ -1,6 +1,6 @@
 ---
-title: Install Docker Desktop 
-description: Install Docker Desktop 
+Title: Install Docker Desktop 
+Description: Install Docker Desktop 
 ---
 
 ## Step-01: Introduction
@@ -37,6 +37,6 @@ https://hub.docker.com
 # Signin Docker Desktop 
 Open Docker Desktop and SignIn to Docker Hub
 
-# Configure kubectl cli on Windows PATH
+# Configure Docker cli on Windows PATH
 C:\Program Files\Docker\Docker\Resources\bin
 ```
