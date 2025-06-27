@@ -52,6 +52,7 @@ docker images --format "{{.Repository}}:{{.Tag}}"
 docker pull nginx
 docker pull -a nginx
 docker pull ghcr.io/OWNER/REPO:tag
+docker pull --platform linux/amd64 nginx
 ```
 
 ---
@@ -176,13 +177,3 @@ docker rmi -f $(docker images -q)
 | `docker rmi $(docker images -q)` | Remove all images. |
 
 ---
-
-## 🔗 Linking This File from `README.md`
-
-To link this file in your `README.md`:
-
-```markdown
-[Docker Command Reference Guide](./docker_networking_commands_reference.md)
-```
-
-Place both `README.md` and this file in the same directory or adjust the path accordingly.
