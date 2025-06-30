@@ -1,19 +1,3 @@
-Since I cannot directly create and export an Excel file, I will provide the content in a Markdown table format. You can easily copy and paste this into an Excel sheet. Each section corresponds to a row in your desired Excel table.
-
-I've structured it exactly as you requested, with the column headers from your Excel image:
-
-  * Service Abstraction/Capability
-  * Layer
-  * Function
-  * Components
-  * Core/ Default
-  * Optional/ Customized
-  * Extended
-  * Parser/ Rules
-  * Default Params
-
------
-
 ```
 | Service Abstraction/Capability | Layer | Function | Components | Core/ Default | Optional/ Customized | Extended | Parser/ Rules | Default Params |
 |---|---|---|---|---|---|---|---|---|
